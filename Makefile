@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=main.c levenstein_distance.h
+SOURCES=main.c levenstein_distance.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=main.out
 

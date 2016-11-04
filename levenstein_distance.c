@@ -1,3 +1,5 @@
+#include "levenstein_distance.h"
+
 int distance(char *s, int len_s, char *t, int len_t)
 {
     int cost;
