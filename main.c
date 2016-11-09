@@ -28,27 +28,24 @@ int main(int argc, char* argv[])
     char* input_filename = (between(filename_idx, 0, argc)) ?
                            argv[filename_idx] :
                            "./lwords.txt";
+    struct stat buf;
+    if (!stat(input_filename, &buf))
+    {
+        // todo implement new behavior
+        printf("here will be the behavior with file input\n");
+        return 0;
+    }
     /* if we don't have enough arguments,
      * check the file, or
      * end program with an error message
      * as well as the typical usage message */
-    if (argc < 3)
+    else if (argc < 3)
     {
-        struct stat buf;
-        if (stat(input_filename, &buf))
-        {
-            // todo implement new behavior
-            printf("here will be the behavior with file input\n");
-            return 0;
-        }
-        else
-        {
-            error("brak argumentów");
-            usage();
-            return 1;
-        }
+        error("brak argumentów");
+        usage();
+        return 1;
     }
-    else
+    else // basic functionality
     {
         // copying words to variables
         char* a = argv[1];

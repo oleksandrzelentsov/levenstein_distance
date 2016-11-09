@@ -1,6 +1,7 @@
 #include "helper.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 
 #define DEBUG 1
 
@@ -25,4 +26,7 @@ void debug(char* message)
         printf("Debug: %s", message);
 }
 
-
+char* format(char* fmt, ...)
+{
+    // TODO implementation
+}
