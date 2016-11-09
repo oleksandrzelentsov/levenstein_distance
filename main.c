@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <ctype.h>
 #include <sys/stat.h>
 
+#include "helper.h"
 #include "levenstein_distance.h"
 
 #ifndef between
@@ -12,11 +14,7 @@
 
 static char* bin_filename;
 
-void error(char* message);
-void debug(char* message);
 void usage();
-void print_distance(char* a, char* b);
-int index_of_string_in_strings(char* strings[], int strings_length, char* string);
 
 int main(int argc, char* argv[])
 {
@@ -24,7 +22,12 @@ int main(int argc, char* argv[])
     setlocale(LC_ALL, "");
     // setting global bin_filename variable
     bin_filename = argv[0];
-    int filename_idx = index_of_string_in_strings(argv, argc, "--filename") + 1;
+    int filename_idx = index_of_string_in_strings(argv, argc, "--filename");
+    filename_idx += (filename_idx == -1) ? 0 : 1;
+    debug("Filename_idx:");
+    char* temp = calloc(20, sizeof(char));
+    sprintf(temp, "%i", filename_idx);
+    debug(temp);
     char* input_filename = (between(filename_idx, 0, argc)) ?
                            argv[filename_idx] :
                            "./lwords.txt";
@@ -59,12 +62,3 @@ void usage()
     printf("użycie: %s <słowo1> <słowo2>\n", bin_filename);
 }
 
-void print_distance(char* a, char* b)
-{
-    // counting the distance
-    int   d = distance(a,
-                       strlen(a),
-                       b,
-                       strlen(b));
-    printf("LD(%s,\n   %s) = %i\n", a, b, d);
-}

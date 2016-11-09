@@ -1,4 +1,6 @@
 #include "levenstein_distance.h"
+#include <stdio.h>
+#include <string.h>
 
 int distance(char *s, int len_s, char *t, int len_t)
 {
@@ -31,4 +33,14 @@ int minimum(int a, int b, int c)
         else return c;
     else if (b < c) return b;
     else return c;
+}
+
+void print_distance(char* a, char* b)
+{
+    // counting the distance
+    int   d = distance(a,
+                       strlen(a),
+                       b,
+                       strlen(b));
+    printf("LD(%s,\n   %s) = %i\n", a, b, d);
 }
