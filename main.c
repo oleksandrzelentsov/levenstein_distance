@@ -31,7 +31,6 @@ int main(int argc, char* argv[])
     char* input_filename = (between(filename_idx, 0, argc)) ?
                            argv[filename_idx] :
                            "./lwords.txt";
-    debug("filename index");
     struct stat buf;
     if (!stat(input_filename, &buf))
     {
