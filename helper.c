@@ -25,8 +25,3 @@ void debug(char* message)
     if(DEBUG)
         printf("Debug: %s", message);
 }
-
-char* format(char* fmt, ...)
-{
-    // TODO implementation
-}

@@ -28,6 +28,7 @@ int main(int argc, char* argv[])
     char* input_filename = (between(filename_idx, 0, argc)) ?
                            argv[filename_idx] :
                            "./lwords.txt";
+    debug("filename index");
     struct stat buf;
     if (!stat(input_filename, &buf))
     {
@@ -57,14 +58,4 @@ int main(int argc, char* argv[])
 void usage()
 {
     printf("użycie: %s <słowo1> <słowo2>\n", bin_filename);
-}
-
-void print_distance(char* a, char* b)
-{
-    // counting the distance
-    int   d = distance(a,
-                       strlen(a),
-                       b,
-                       strlen(b));
-    printf("LD(%s,\n   %s) = %i\n", a, b, d);
 }
