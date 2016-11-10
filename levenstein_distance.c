@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "levenstein_distance.h"
+#include <stdio.h>
+#include <string.h>
 
 int distance(char *s, int len_s, char *t, int len_t)
 {

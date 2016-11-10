@@ -1,7 +1,6 @@
 #include "helper.h"
 #include <stdio.h>
 #include <string.h>
-#include <stdarg.h>
 
 #define DEBUG 1
 
@@ -23,5 +22,5 @@ void error(char* message)
 void debug(char* message)
 {
     if(DEBUG)
-        printf("Debug: %s", message);
+        printf("Debug: %s\n", message);
 }
