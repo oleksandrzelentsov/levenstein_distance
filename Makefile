@@ -15,3 +15,6 @@ $(EXECUTABLE): $(OBJECTS)
 
 clean:
 	rm $(OBJECTS)
+
+test:
+	python3.5 -mrobot --variable APP_EXECUTABLE_NAME:$(realpath $(EXECUTABLE)) --pythonpath tests/resources -d results tests/testcases/*.robot
