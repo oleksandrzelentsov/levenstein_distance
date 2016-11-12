@@ -22,5 +22,7 @@ void error(char* message)
 void debug(char* message)
 {
     if(DEBUG)
-        printf("Debug: %s\n", message);
+    {
+        printf("DEBUG: %s\n", message);
+    }
 }

@@ -68,3 +68,6 @@ Mkfile.old
 dkms.conf
 
 # Generated using ignr.py - github.com/Antrikshy/ignr.py
+
+# Own
+lwords.txt

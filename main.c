@@ -16,23 +16,16 @@ static char* bin_filename;
 
 void usage();
 
+char* get_filename(char*[], int);
+
 int main(int argc, char* argv[])
 {
     // enabling Polish characters
     setlocale(LC_ALL, "");
     // setting global bin_filename variable
     bin_filename = argv[0];
-    int filename_idx = index_of_string_in_strings(argv, argc, "--filename");
-    filename_idx += (filename_idx == -1) ? 0 : 1;
-    debug("Filename_idx:");
-    char* temp = calloc(20, sizeof(char));
-    sprintf(temp, "%i", filename_idx);
-    debug(temp);
-    char* input_filename = (between(filename_idx, 0, argc)) ?
-                           argv[filename_idx] :
-                           "./lwords.txt";
     struct stat buf;
-    if (!stat(input_filename, &buf))
+    if (!stat(get_filename(argv, argc), &buf))
     {
         // todo implement new behavior
         printf("here will be the behavior with file input\n");
@@ -50,10 +43,7 @@ int main(int argc, char* argv[])
     }
     else // basic functionality
     {
-        // copying words to variables
-        char* a = argv[1];
-        char* b = argv[2];
-        print_distance(a, b);
+        print_distance(argv[1], argv[2]);
     }
 }
 
@@ -62,3 +52,16 @@ void usage()
     printf("użycie: %s <słowo1> <słowo2>\n", bin_filename);
 }
 
+char* get_filename(char* argv[], int argc)
+{
+    int filename_idx = index_of_string_in_strings(argv, argc, "--filename");
+    filename_idx += (filename_idx == -1) ? 0 : 1;
+    debug("Filename_idx:");
+    char* temp = calloc(20, sizeof(char));
+    sprintf(temp, "%i", filename_idx);
+    debug(temp);
+    char* input_filename = (between(filename_idx, 0, argc)) ?
+                           argv[filename_idx] :
+                           "./lwords.txt";
+    return input_filename;
+}
