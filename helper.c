@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#define DEBUG 0
+#ifndef _HELPER_C_
+#define _HELPER_C_
+#define DEBUG 1
 
 int index_of_string_in_strings(char* strings[], int strings_length, char* string)
 {
@@ -26,3 +28,5 @@ void debug(char* message)
         printf("DEBUG: %s\n", message);
     }
 }
+
+#endif
