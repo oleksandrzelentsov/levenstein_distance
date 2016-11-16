@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=main.c levenstein_distance.c helper.c
+SOURCES=main.c levenstein_distance.c helper.c file_input.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=main.out
 PYTHON_EXECUTABLE=python3.5

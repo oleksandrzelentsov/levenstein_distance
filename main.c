@@ -7,6 +7,7 @@
 
 #include "helper.h"
 #include "levenstein_distance.h"
+#include "file_input.h"
 
 #ifndef between
 #define between(A,X,Y) ((A) < (Y) && (A) >= (X))
@@ -24,11 +25,18 @@ int main(int argc, char* argv[])
     setlocale(LC_ALL, "");
     // setting global bin_filename variable
     bin_filename = argv[0];
+    char* arg_filename = get_filename(argv, argc);
     struct stat buf;
-    if (!stat(get_filename(argv, argc), &buf))
+    if (!stat(arg_filename, &buf))
     {
         // todo implement new behavior
         printf("here will be the behavior with file input\n");
+        int a = 0;
+        char** res = get_lines_from_file(arg_filename, &a);
+        for(int i = 0; i < a; ++i)
+        {
+            printf("%s\n", res[i]);
+        }
         return 0;
     }
     /* if we don't have enough arguments,
