@@ -9,9 +9,10 @@
 #include "levenstein_distance.h"
 #include "file_input.h"
 
-#ifndef between
+#ifndef _MAIN_C_
+#define _MAIN_C_
+
 #define between(A,X,Y) ((A) < (Y) && (A) >= (X))
-#endif
 
 static char* bin_filename;
 
@@ -27,7 +28,11 @@ int main(int argc, char* argv[])
     bin_filename = argv[0];
     char* arg_filename = get_filename(argv, argc);
     struct stat buf;
-    if (!stat(arg_filename, &buf))
+    if (argc == 3) // basic functionality
+    {
+        print_distance(argv[1], argv[2]);
+    }
+    else if (!stat(arg_filename, &buf))
     {
         // todo implement new behavior
         printf("here will be the behavior with file input\n");
@@ -43,15 +48,11 @@ int main(int argc, char* argv[])
      * check the file, or
      * end program with an error message
      * as well as the typical usage message */
-    else if (argc < 3)
+    else
     {
-        error("brak argumentów");
+        error("brak argumentów albo plik lwords.txt nie istnieje");
         usage();
         return 1;
-    }
-    else // basic functionality
-    {
-        print_distance(argv[1], argv[2]);
     }
 }
 
@@ -73,3 +74,5 @@ char* get_filename(char* argv[], int argc)
                            "./lwords.txt";
     return input_filename;
 }
+
+#endif

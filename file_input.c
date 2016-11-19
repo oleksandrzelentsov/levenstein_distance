@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef _FILE_INPUT_C_
+#define _FILE_INPUT_C_
 
 int count_lines(char* filename)
 {
@@ -30,7 +32,9 @@ char** get_lines_from_file(char* filename, int* lines_count)
     ssize_t read;
     FILE* fp = fopen(filename, "rb");
     if (fp == NULL)
+    {
         return NULL;
+    }
     while((read = getline(&line, &length, fp)) != -1)
     {
         result[i] = calloc(length, sizeof(char));
@@ -47,3 +51,4 @@ char** get_lines_from_file(char* filename, int* lines_count)
     return result;
 }
 
+#endif

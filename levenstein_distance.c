@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifndef _LEVENSTEIN_DISTANCE_C_
+#define _LEVENSTEIN_DISTANCE_C_
+
 int distance(char *s, int len_s, char *t, int len_t)
 {
     int cost;
@@ -46,3 +49,5 @@ void print_distance(char* a, char* b)
                        strlen(b));
     printf("LD(%s,\n   %s) = %i\n", a, b, d);
 }
+
+#endif
