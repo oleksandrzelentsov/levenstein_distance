@@ -29,7 +29,10 @@ int main(int argc, char* argv[])
     char* arg_filename = get_filename(argv, argc);
     int index = get_index(argv, argc);
     struct stat buf;
-    if (argc == 3 && (index_of_string_in_strings(argv, argc, "--filename") == -1 && index_of_string_in_strings(argv, argc, "--index") == -1)) // basic functionality
+    // basic functionality
+    if (argc == 3 &&
+        index_of_string_in_strings(argv, argc, "--filename") == -1 &&
+        index_of_string_in_strings(argv, argc, "--index") == -1)
     {
         print_distance(argv[1], argv[2]);
     }
