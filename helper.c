@@ -29,4 +29,12 @@ void debug(char* message)
     }
 }
 
+void print_string_array(char** res, int a)
+{
+    for(int i = 0; i < a; ++i)
+    {
+        printf("%s\n", res[i]);
+    }
+}
+
 #endif

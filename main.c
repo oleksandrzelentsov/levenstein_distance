@@ -17,10 +17,7 @@
 static char* bin_filename;
 
 void usage();
-
 char* get_filename(char*[], int);
-
-void print_string_array(char**, int);
 
 int main(int argc, char* argv[])
 {
@@ -79,14 +76,6 @@ char* get_filename(char* argv[], int argc)
                            argv[filename_idx] :
                            "./lwords.txt";
     return input_filename;
-}
-
-void print_string_array(char** res, int a)
-{
-    for(int i = 0; i < a; ++i)
-    {
-        printf("%s\n", res[i]);
-    }
 }
 
 #endif
