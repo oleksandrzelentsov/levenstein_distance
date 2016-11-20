@@ -20,4 +20,4 @@ File is located nearby, unmarked
     [Template]       Check file reading capabilities
     [Setup]          Log to Console  TESTING
     [Teardown]       Remove file  ${DEFAULT_INPUT_FILENAME}
-    Jurek, Marek, Janek  2, 2, 3
+    Jurek, Marek, Janek

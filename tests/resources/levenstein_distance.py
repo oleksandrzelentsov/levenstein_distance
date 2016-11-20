@@ -2,6 +2,7 @@ from subprocess import call, Popen, check_output
 from robot.libraries.BuiltIn import BuiltIn
 from robot.api.deco import keyword
 from re import findall
+from itertools import permutations
 
 
 _get_robot_var = BuiltIn().get_variable_value
@@ -10,21 +11,37 @@ _log_to_console = BuiltIn().log_to_console
 _output_results_regex = r'\(([\w\d]*)\s*\,\s*([\w\d]*)\)\s*\=\s*(\d*)'
 _get_executable_output = lambda *args: check_output([
                 _get_robot_var('${APP_EXECUTABLE_NAME}'),
-] + args).decode('utf-8')
+] + list(args)).decode('utf-8')
 _parse_robot_list = lambda x: x.split(', ')
+
+
+def _check_if_output_has(output, *data):
+    temp = findall(_output_results_regex, output)
+    for arg1, arg2, r in data:
+        BuiltIn().should_be_true((arg1, arg2, r) in temp or (arg2, arg1, r) in temp)
 
 
 @keyword('levenstein distance equals')
 def application_returns(arg1, arg2, r):
     _log_to_console('checking if LD({}, {}) = {}'.format(arg1, arg2, r))
     output = _get_executable_output(arg1, arg2)
-    temp = findall(_output_results_regex , output)
-    BuiltIn().should_be_true((arg1, arg2, r) in temp)
+    _check_if_output_has(output, (arg1, arg2, r))
+
+
+def _check_file_reading(words, filename):
+    words = _parse_robot_list(words)
+    with open(filename, mode='w') as fp:
+        fp.writelines(words)
+    res = _get_executable_output('--filename', filename)
+    list_ = findall(_output_results_regex, res)
+    _log_to_console('matches: {}'.format(str(list_)))
+    BuiltIn().length_should_be(list_, len(list(permutations(words, 2))), 'different lengths of input and output')
+    for arg1, arg2, r in list_:
+        application_returns(arg1, arg2, r)
 
 
 @keyword('check file reading capabilities')
-def kw2(words, lengths):
-    with open(_get_robot_var('${DEFAULT_INPUT_FILENAME}'), mode='w') as fp:
-        fp.writelines(_parse_robot_list(words))
-    res = _get_executable_output(
+def kw2(words):
+    _check_file_reading(words,
+                        filename=_get_robot_var('${DEFAULT_INPUT_FILENAME}'))
 
