@@ -43,11 +43,34 @@ int minimum(int a, int b, int c)
 void print_distance(char* a, char* b)
 {
     // counting the distance
-    int   d = distance(a,
-                       strlen(a),
-                       b,
-                       strlen(b));
+    int d = distance(a,
+                     strlen(a),
+                     b,
+                     strlen(b));
     printf("LD(%s,\n   %s) = %i\n", a, b, d);
+}
+
+void print_distance_of_combinations(char** words, int length)
+{
+    for(int i = 0; i < length - 1; ++i)
+    {
+        for (int j = i + 1; j < length; ++j)
+        {
+            print_distance(words[i], words[j]);
+        }
+    }
+}
+
+void print_distance_of_combinations_part(char** words, int length, int index)
+{
+    if (!(index < length && index >= 0))
+        return;
+    for(int i = 0; i < length - 1; ++i)
+    {
+        if (index == i)
+            continue;
+        print_distance(words[index], words[i]);
+    }
 }
 
 #endif

@@ -18,6 +18,7 @@ static char* bin_filename;
 
 void usage();
 char* get_filename(char*[], int);
+int get_index(char*[], int);
 
 int main(int argc, char* argv[])
 {
@@ -26,8 +27,9 @@ int main(int argc, char* argv[])
     // setting global bin_filename variable
     bin_filename = argv[0];
     char* arg_filename = get_filename(argv, argc);
+    int index = get_index(argv, argc);
     struct stat buf;
-    if (argc == 3 && index_of_string_in_strings(argv, argc, "--filename") == -1) // basic functionality
+    if (argc == 3 && (index_of_string_in_strings(argv, argc, "--filename") == -1 && index_of_string_in_strings(argv, argc, "--index") == -1)) // basic functionality
     {
         print_distance(argv[1], argv[2]);
     }
@@ -37,13 +39,13 @@ int main(int argc, char* argv[])
         printf("here will be the behavior with file input\n");
         int a = 0;
         char** res = get_lines_from_file(arg_filename, &a);
-        //print_string_array(res, a);
-        for(int i = 0; i < a - 1; ++i)
+        if (index != -1)
         {
-            for (int j = i + 1; j < a; ++j)
-            {
-                print_distance(res[i], res[j]);
-            }
+            print_distance_of_combinations_part(res, a, index);
+        }
+        else
+        {
+            print_distance_of_combinations(res, a);
         }
         return 0;
     }
@@ -76,6 +78,13 @@ char* get_filename(char* argv[], int argc)
                            argv[filename_idx] :
                            "./lwords.txt";
     return input_filename;
+}
+
+int get_index(char* argv[], int argc)
+{
+    int index_idx = index_of_string_in_strings(argv, argc, "--index");
+    index_idx += (index_idx == -1) ? 0 : 1;
+    return index_idx;
 }
 
 #endif
