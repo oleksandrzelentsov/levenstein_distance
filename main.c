@@ -23,7 +23,7 @@ char* get_filename(char*[], int);
 int main(int argc, char* argv[])
 {
     // enabling Polish characters
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "C.UTF-8");
     // setting global bin_filename variable
     bin_filename = argv[0];
     char* arg_filename = get_filename(argv, argc);
