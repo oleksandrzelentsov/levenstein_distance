@@ -18,6 +18,6 @@ Basic functionality
 File is located nearby, unmarked
     [Documentation]  Checks the situation when the file is in the folder but is not requested
     [Template]       Check file reading capabilities
-    [Setup]          Log to Console  TESTING
-    [Teardown]       Remove file  ${DEFAULT_INPUT_FILENAME}
+    [Setup]          Backup current input file
+    [Teardown]       Restore current input file
     Jurek, Marek, Janek

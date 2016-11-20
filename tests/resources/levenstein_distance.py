@@ -2,7 +2,8 @@ from subprocess import call, Popen, check_output
 from robot.libraries.BuiltIn import BuiltIn
 from robot.api.deco import keyword
 from re import findall
-from itertools import permutations
+from itertools import combinations
+from os.path import isfile
 
 
 _get_robot_var = BuiltIn().get_variable_value
@@ -12,7 +13,7 @@ _output_results_regex = r'\(([\w\d]*)\s*\,\s*([\w\d]*)\)\s*\=\s*(\d*)'
 _get_executable_output = lambda *args: check_output([
                 _get_robot_var('${APP_EXECUTABLE_NAME}'),
 ] + list(args)).decode('utf-8')
-_parse_robot_list = lambda x: x.split(', ')
+_parse_robot_list = lambda x: list(map(lambda y: y + '\n', x.split(', ')))
 
 
 def _check_if_output_has(output, *data):
@@ -35,7 +36,8 @@ def _check_file_reading(words, filename):
     res = _get_executable_output('--filename', filename)
     list_ = findall(_output_results_regex, res)
     _log_to_console('matches: {}'.format(str(list_)))
-    BuiltIn().length_should_be(list_, len(list(permutations(words, 2))), 'different lengths of input and output')
+    _log_to_console('length should be: {}'.format(len(list(combinations(words, 2)))))
+    BuiltIn().length_should_be(list_, len(list(combinations(words, 2))), 'different lengths of input and output\noutput:\n{}'.format(res))
     for arg1, arg2, r in list_:
         application_returns(arg1, arg2, r)
 
@@ -45,3 +47,17 @@ def kw2(words):
     _check_file_reading(words,
                         filename=_get_robot_var('${DEFAULT_INPUT_FILENAME}'))
 
+
+@keyword('backup current input file')
+def setup_mine():
+    _log_to_console('| TESTING |')
+    filename = _get_robot_var('${DEFAULT_INPUT_FILENAME}')
+    if isfile(filename):
+        call(['mv', filename, filename + '.bak'])
+
+
+@keyword('restore current input file')
+def teardown_mine():
+    filename = _get_robot_var('${DEFAULT_INPUT_FILENAME}')
+    if isfile(filename + '.bak'):
+        call(['mv', filename + '.bak', filename])

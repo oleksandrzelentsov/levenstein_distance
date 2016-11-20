@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
     bin_filename = argv[0];
     char* arg_filename = get_filename(argv, argc);
     struct stat buf;
-    if (argc == 3) // basic functionality
+    if (argc == 3 && index_of_string_in_strings(argv, argc, "--filename") == -1) // basic functionality
     {
         print_distance(argv[1], argv[2]);
     }
