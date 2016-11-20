@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=main.c levenstein_distance.h
+SOURCES=main.c levenstein_distance.c helper.c file_input.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=main.out
 PYTHON_EXECUTABLE=python3.5
@@ -21,4 +21,4 @@ clean:
 	rm $(OBJECTS)
 
 test:
-	python3.5 -mrobot --variable APP_EXECUTABLE_NAME:$(realpath $(EXECUTABLE)) --pythonpath $(TESTS_ROOT)/resources -d $(TEST_RESULTS) $(TESTS_ROOT)/testcases/*.robot
+	$(PYTHON_EXECUTABLE) -mrobot --variable APP_EXECUTABLE_NAME:$(realpath $(EXECUTABLE)) --pythonpath $(TESTS_ROOT)/resources -d $(TEST_RESULTS) $(TESTS_ROOT)/testcases/*.robot
