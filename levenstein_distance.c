@@ -41,12 +41,19 @@ int minimum(int a, int b, int c)
 
 void print_distance(char* a, char* b)
 {
+    print_distance_in_table(a, b, strlen(a), strlen(b));
+}
+
+void print_distance_in_table(char* a, char* b, int a_length, int b_length)
+{
     // counting the distance
     int d = distance(a,
                      strlen(a),
                      b,
                      strlen(b));
-    printf("LD(%s,\n   %s) = %i\n", a, b, d);
+    char* format_string = calloc(100, sizeof(char));
+    sprintf(format_string, "| %%%is | %%%is | %%i\n", a_length, b_length);
+    printf(format_string, a, b, d);
 }
 
 void print_distance_of_combinations(char** words, int length)
@@ -57,19 +64,11 @@ void print_distance_of_combinations(char** words, int length)
         int t = strlen(words[i]);
         max_length = (max_length < t) ? t : max_length;
     }
-    char* format_string = calloc(100, sizeof(char));
-    sprintf(format_string, "| %%%is | %%%is | %%i\n", max_length, max_length);
     for(int i = 0; i < length - 1; ++i)
     {
         for (int j = i + 1; j < length; ++j)
         {
-            printf(format_string,
-                   words[i],
-                   words[j],
-                   distance(words[i],
-                            strlen(words[i]),
-                            words[j],
-                            strlen(words[j])));
+            print_distance_in_table(words[i], words[j], max_length, max_length);
         }
     }
 }
@@ -85,20 +84,11 @@ void print_distance_of_combinations_part(char** words, int length, int index)
         max_length = (max_length < t) ? t : max_length;
     }
     printf("Odległość Levenstein'a od %s do:\n", words[index]);
-    char* format_string = calloc(100, sizeof(char));
-    sprintf(format_string, "| %%%lus | %%%is | %%i\n", strlen(words[index]), max_length);
     for(int i = 0; i < length; ++i)
     {
         if (index == i)
             continue;
-        //print_distance(words[index], words[i]);
-        printf(format_string,
-               words[index],
-               words[i],
-               distance(words[index],
-                        strlen(words[index]),
-                        words[i],
-                        strlen(words[i])));
+        print_distance_in_table(words[index], words[i], strlen(words[index]), max_length);
     }
 }
 

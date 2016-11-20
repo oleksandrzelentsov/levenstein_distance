@@ -7,6 +7,8 @@ int minimum(int, int, int);
 
 void print_distance(char*, char*);
 
+void print_distance_in_table(char*, char*, int, int);
+
 void print_distance_of_combinations(char**, int);
 
 void print_distance_of_combinations_part(char**, int, int);

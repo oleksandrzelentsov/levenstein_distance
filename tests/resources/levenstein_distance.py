@@ -9,7 +9,7 @@ from os.path import isfile
 _get_robot_var = BuiltIn().get_variable_value
 _log = BuiltIn().log
 _log_to_console = BuiltIn().log_to_console
-_output_results_regex = r'\(([\w\d]*)\s*\,\s*([\w\d]*)\)\s*\=\s*(\d*)'
+_output_results_regex = r'\|[\s\W]*([\w\d]*)[\s\W]*([\w\d]*)[\s\W]*(\d*)'
 _get_executable_output = lambda *args: check_output([
                 _get_robot_var('${APP_EXECUTABLE_NAME}'),
 ] + list(args)).decode('utf-8')
