@@ -4,7 +4,7 @@
 
 #ifndef _HELPER_C_
 #define _HELPER_C_
-#define DEBUG 1
+#define DEBUG 0
 
 int index_of_string_in_strings(char* strings[], int strings_length, char* string)
 {

@@ -20,6 +20,8 @@ void usage();
 
 char* get_filename(char*[], int);
 
+void print_string_array(char**, int);
+
 int main(int argc, char* argv[])
 {
     // enabling Polish characters
@@ -38,9 +40,13 @@ int main(int argc, char* argv[])
         printf("here will be the behavior with file input\n");
         int a = 0;
         char** res = get_lines_from_file(arg_filename, &a);
-        for(int i = 0; i < a; ++i)
+        //print_string_array(res, a);
+        for(int i = 0; i < a - 1; ++i)
         {
-            printf("%s\n", res[i]);
+            for (int j = i + 1; j < a; ++j)
+            {
+                print_distance(res[i], res[j]);
+            }
         }
         return 0;
     }
@@ -73,6 +79,14 @@ char* get_filename(char* argv[], int argc)
                            argv[filename_idx] :
                            "./lwords.txt";
     return input_filename;
+}
+
+void print_string_array(char** res, int a)
+{
+    for(int i = 0; i < a; ++i)
+    {
+        printf("%s\n", res[i]);
+    }
 }
 
 #endif
