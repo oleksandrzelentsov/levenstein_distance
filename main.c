@@ -39,7 +39,6 @@ int main(int argc, char* argv[])
     else if (!stat(arg_filename, &buf))
     {
         // todo implement new behavior
-        printf("here will be the behavior with file input\n");
         int a = 0;
         char** res = get_lines_from_file(arg_filename, &a);
         if (index != -1)
