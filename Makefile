@@ -21,4 +21,4 @@ clean:
 	rm $(OBJECTS)
 
 test:
-	$(PYTHON_EXECUTABLE) -mrobot --variable APP_EXECUTABLE_NAME:$(realpath $(EXECUTABLE)) --pythonpath $(TESTS_ROOT)/resources -d $(TEST_RESULTS) $(TESTS_ROOT)/testcases/*.robot
+	"$(PYTHON_EXECUTABLE)" -mrobot --variable APP_EXECUTABLE_NAME:"$(realpath $(EXECUTABLE))" --pythonpath "$(TESTS_ROOT)/resources" -d "$(TEST_RESULTS)" "$(TESTS_ROOT)/testcases/*.robot"
