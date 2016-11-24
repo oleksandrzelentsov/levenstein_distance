@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -Wall
+CFLAGS=-c -Wall --std=c11
 LDFLAGS=
 SOURCES=main.c levenstein_distance.c helper.c file_input.c
 OBJECTS=$(SOURCES:.c=.o)
