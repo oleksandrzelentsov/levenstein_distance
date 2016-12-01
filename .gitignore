@@ -164,3 +164,4 @@ ENV/
 # Own
 results/
 lwords.txt
+lwords.*.txt
