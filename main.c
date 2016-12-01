@@ -15,7 +15,7 @@
 #define between(A,X,Y) ((A) < (Y) && (A) >= (X))
 
 static char* bin_filename;
-const char* program_locale = "pl_PL.UTF-32";
+const char* program_locale = ".UTF-8";
 
 void usage();
 char* get_filename(char*[], int);
