@@ -15,6 +15,7 @@
 #define between(A,X,Y) ((A) < (Y) && (A) >= (X))
 
 static char* bin_filename;
+const char* program_locale = ".UTF-8";
 
 void usage();
 char* get_filename(char*[], int);
@@ -23,7 +24,7 @@ int get_index(char*[], int);
 int main(int argc, char* argv[])
 {
     // enabling Polish characters
-    setlocale(LC_ALL, "C.UTF-8");
+    setlocale(LC_ALL, program_locale);
     // setting global bin_filename variable
     bin_filename = argv[0];
     char* arg_filename = get_filename(argv, argc);
@@ -39,7 +40,6 @@ int main(int argc, char* argv[])
     else if (!stat(arg_filename, &buf))
     {
         // todo implement new behavior
-        printf("here will be the behavior with file input\n");
         int a = 0;
         char** res = get_lines_from_file(arg_filename, &a);
         if (index != -1)

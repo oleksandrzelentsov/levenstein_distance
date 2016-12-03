@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "levenstein_distance.h"
 
 #ifndef _LEVENSTEIN_DISTANCE_C_
@@ -9,13 +10,15 @@
 int distance(char *s, int len_s, char *t, int len_t)
 {
     int cost;
+    char c1 = tolower(s[len_s - 1]);
+    char c2 = tolower(t[len_t - 1]);
 
     /* base case: empty strings */
     if (len_s == 0) return len_t;
     if (len_t == 0) return len_s;
 
     /* test if last characters of the strings match */
-    if (s[len_s - 1] == t[len_t - 1])
+    if (c1 == c2)
         cost = 0;
     else
         cost = 1;

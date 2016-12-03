@@ -1,0 +1,19 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+SSH_PRIVATE_KEY = "/root/.ssh/id_rsa"
+SSH_USER = "root"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "centos/7"
+  config.ssh.username = SSH_USER
+  config.ssh.private_key_path = SSH_PRIVATE_KEY
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "provisioning.yml"
+    ansible.extra_vars = {
+      ssh_user: SSH_USER,
+    }
+    ansible.host_key_checking = 'false'
+  end
+end
