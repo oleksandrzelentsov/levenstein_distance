@@ -15,7 +15,7 @@
 #define between(A,X,Y) ((A) < (Y) && (A) >= (X))
 
 static char* bin_filename;
-const char* program_locale = ".UTF-8";
+const char* program_locale = ".UTF8";
 
 void usage();
 char* get_filename(char*[], int);
@@ -41,6 +41,8 @@ int main(int argc, char* argv[])
     {
         // todo implement new behavior
         int a = 0;
+        debug("reading from file");
+        debug(arg_filename);
         char** res = get_lines_from_file(arg_filename, &a);
         if (index != -1)
         {

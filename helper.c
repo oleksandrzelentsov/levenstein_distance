@@ -4,7 +4,7 @@
 
 #ifndef _HELPER_C_
 #define _HELPER_C_
-#define DEBUG 0
+#define DEBUG 1
 
 int index_of_string_in_strings(char* strings[], int strings_length, char* string)
 {
@@ -25,7 +25,18 @@ void debug(char* message)
 {
     if(DEBUG)
     {
-        printf("DEBUG: %s\n", message);
+        printf("DEBUG %s\n", message);
+    }
+}
+
+void debug_i(int number)
+{
+    if(DEBUG)
+    {
+        char* temp = calloc(100, sizeof(char));
+        sprintf(temp, "%lu", number);
+        printf("DEBUG %d\n", temp);
+        free(temp);
     }
 }
 

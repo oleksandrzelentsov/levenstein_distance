@@ -9,17 +9,17 @@
 
 int count_lines(char* filename)
 {
-    FILE* fp = fopen(filename, "r");
+    FILE* fp = fopen(filename, "rb");
     fwide(fp, 1);
     int lines = 0;
     while(!feof(fp))
     {
         char ch = fgetwc(fp);
-        if(ch == '\n')
+        if(ch == L'\n')
         {
             lines++;
         }
-        else if (ch == EOF)
+        else if (ch == EOF || ch == WEOF)
             break;
         else
         {
@@ -37,6 +37,7 @@ char** get_lines_from_file(char* filename, int* lines_count)
 {
     debug("counting lines");
     *lines_count = count_lines(filename);
+    debug_i(*lines_count);
     char** result = calloc(*lines_count, sizeof(char*));
     size_t i = 0;
     char* line = calloc(100, sizeof(char));
@@ -51,16 +52,14 @@ char** get_lines_from_file(char* filename, int* lines_count)
     while(!feof(fp) && fwscanf(fp, L"%s", (wchar_t*)line) >= 1)
     {
         debug("___________________________________");
-        length = wcslen((wchar_t*)line);
+        length = strlen(line);
         debug("read successful");
         result[i] = calloc(length, sizeof(char));
         debug("memory allocation successful");
-        wcscpy((wchar_t*)result[i], (wchar_t*)line);
+        wcscpy((wchar_t*) result[i], (wchar_t*) line);
         debug("copying successful");
-        char* temp = calloc(100, sizeof(char));
-        sprintf(temp, "%lu", length);
         debug("length:");
-        debug(temp);
+        debug_i(length);
         debug("read:");
         debug(line);
         ++i;
