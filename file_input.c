@@ -19,7 +19,7 @@ char** get_lines_from_file(char* filename, int* lines_count)
         char ch = fgetwc(fp);
         if(ch == L'\n')
         {
-            lines++;
+            [lines++];
         }
         else if (ch == EOF || ch == WEOF)
             break;

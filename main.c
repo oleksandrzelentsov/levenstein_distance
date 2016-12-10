@@ -15,19 +15,23 @@
 #define between(A,X,Y) ((A) < (Y) && (A) >= (X))
 
 static char* bin_filename;
-const char* program_locale = ".UTF8";
+const char* default_input_filename = "./lwords.txt";
+const char* default_program_locale = "";
 
 void usage();
 char* get_filename(char*[], int);
 int get_index(char*[], int);
+char* get_program_locale(char*[], int);
+char* get_string_argument(char*[], int, char*, const char*);
 
 int main(int argc, char* argv[])
 {
     // enabling Polish characters
-    setlocale(LC_ALL, program_locale);
+    setlocale(LC_ALL, get_string_argument(argv, argc, "--locale", default_program_locale));
+
     // setting global bin_filename variable
     bin_filename = argv[0];
-    char* arg_filename = get_filename(argv, argc);
+    char* arg_filename = get_string_argument(argv, argc, "--filename", default_input_filename);
     int index = get_index(argv, argc);
     struct stat buf;
     // basic functionality
@@ -52,7 +56,6 @@ int main(int argc, char* argv[])
         {
             print_distance_of_combinations(res, a);
         }
-        return 0;
     }
     /* if we don't have enough arguments,
      * check the file, or
@@ -64,6 +67,7 @@ int main(int argc, char* argv[])
         usage();
         return 1;
     }
+    return 0;
 }
 
 void usage()
@@ -71,25 +75,23 @@ void usage()
     printf("użycie: %s <słowo1> <słowo2>\n", bin_filename);
 }
 
-char* get_filename(char* argv[], int argc)
-{
-    int filename_idx = index_of_string_in_strings(argv, argc, "--filename");
-    filename_idx += (filename_idx == -1) ? 0 : 1;
-    debug("Filename_idx:");
-    char* temp = calloc(20, sizeof(char));
-    sprintf(temp, "%i", filename_idx);
-    debug(temp);
-    char* input_filename = (between(filename_idx, 0, argc)) ?
-                           argv[filename_idx] :
-                           "./lwords.txt";
-    return input_filename;
-}
-
 int get_index(char* argv[], int argc)
 {
     int index_idx = index_of_string_in_strings(argv, argc, "--index");
     index_idx += (index_idx == -1) ? 0 : 1;
     return index_idx;
+}
+
+char* get_string_argument(char* argv[], int argc, char* ident_name, const char* default_value)
+{
+    int filename_idx = index_of_string_in_strings(argv, argc, ident_name);
+    filename_idx += (filename_idx == -1) ? 0 : 1;
+    debug(ident_name);
+    debug_i(filename_idx);
+    char* input_filename = between(filename_idx, 0, argc) ?
+                           argv[filename_idx] :
+                           default_value;
+    return input_filename;
 }
 
 #endif
