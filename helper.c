@@ -41,11 +41,35 @@ void debug_i(int number)
     }
 }
 
-void print_string_array(char** res, int a)
+void debug_c(char c)
+{
+    if(DEBUG)
+    {
+        printf("DEBUG %c\n", c);
+    }
+}
+
+void debug_wc(wchar_t wc)
+{
+    if(DEBUG)
+    {
+        printf("DEBUG %lc\n", wc);
+    }
+}
+
+void debug_w(wchar_t* message)
+{
+    if(DEBUG)
+    {
+        printf("DEBUG %ls\n", message);
+    }
+}
+
+void print_string_array(wchar_t** res, int a)
 {
     for(int i = 0; i < a; ++i)
     {
-        printf("%s\n", res[i]);
+        printf("%ls\n", res[i]);
     }
 }
 

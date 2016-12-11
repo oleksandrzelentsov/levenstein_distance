@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
         index_of_string_in_strings(argv, argc, "--filename") == -1 &&
         index_of_string_in_strings(argv, argc, "--index") == -1)
     {
-        print_distance(argv[1], argv[2]);
+        print_distance((wchar_t*)argv[1],(wchar_t*)argv[2]);
     }
     else if (!stat(arg_filename, &buf))
     {
@@ -47,13 +47,18 @@ int main(int argc, char* argv[])
         int a = 0;
         debug("reading from file");
         debug(arg_filename);
-        char** res = get_lines_from_file(arg_filename, &a);
+        wchar_t** res = get_lines_from_file(arg_filename, &a);
+        debug("returned from function, count:");
+        debug_i(a);
+        print_string_array(res, a);
         if (index != -1)
         {
+            debug("printing distance of combinations using index");
             print_distance_of_combinations_part(res, a, index);
         }
         else
         {
+            debug("printing distance of combinations");
             print_distance_of_combinations(res, a);
         }
     }
