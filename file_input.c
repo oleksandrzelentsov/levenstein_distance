@@ -52,7 +52,7 @@ wchar_t** get_lines_from_file(char* filename, int* lines_count)
                 //free(result);
                 result = t_res;
                 debug("array after resize");
-                print_string_array(result, r_mem_size);
+                //print_string_array(result, r_mem_size);
             }
             debug("read line:");
             debug_w(line);
@@ -69,7 +69,7 @@ wchar_t** get_lines_from_file(char* filename, int* lines_count)
             line_length = 0;
             lines++;
             debug("array state:");
-            print_string_array(result, r_mem_size);
+            //print_string_array(result, r_mem_size);
             debug("end array state");
             debug("-------------------------------------------");
         }

@@ -17,6 +17,7 @@
 static char* bin_filename;
 const char* default_input_filename = "./lwords.txt";
 const char* default_program_locale = "";
+const int verbosity = 1;
 
 void usage();
 char* get_filename(char*[], int);
@@ -39,7 +40,11 @@ int main(int argc, char* argv[])
         index_of_string_in_strings(argv, argc, "--filename") == -1 &&
         index_of_string_in_strings(argv, argc, "--index") == -1)
     {
-        print_distance((wchar_t*)argv[1],(wchar_t*)argv[2]);
+        wchar_t* a1 = calloc(120, sizeof(wchar_t));
+        wchar_t* a2 = calloc(120, sizeof(wchar_t));
+        mbstowcs(a1, argv[1], 120);
+        mbstowcs(a2, argv[2], 120);
+        print_distance(a1, a2);
     }
     else if (!stat(arg_filename, &buf))
     {
@@ -50,7 +55,7 @@ int main(int argc, char* argv[])
         wchar_t** res = get_lines_from_file(arg_filename, &a);
         debug("returned from function, count:");
         debug_i(a);
-        print_string_array(res, a);
+        //print_string_array(res, a);
         if (index != -1)
         {
             debug("printing distance of combinations using index");

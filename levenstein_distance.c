@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <wctype.h>
 #include <wchar.h>
 #include "helper.h"
 #include "levenstein_distance.h"
@@ -12,8 +13,8 @@
 int distance(wchar_t *s, int len_s, wchar_t *t, int len_t)
 {
     int cost;
-    wchar_t c1 = tolower((char)s[len_s - 1]);
-    wchar_t c2 = tolower((char)t[len_t - 1]);
+    wchar_t c1 = towlower(s[len_s - 1]);
+    wchar_t c2 = towlower(t[len_t - 1]);
 
     /* base case: empty strings */
     if (len_s == 0) return len_t;
