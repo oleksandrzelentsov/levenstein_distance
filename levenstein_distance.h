@@ -1,16 +1,16 @@
 #ifndef _LEVENSTEIN_DISTANCE_H_
 #define _LEVENSTEIN_DISTANCE_H_
 
-int distance(char*, int, char*, int);
+int distance(wchar_t*, int, wchar_t*, int);
 
 int minimum(int, int, int);
 
-void print_distance(char*, char*);
+void print_distance(wchar_t*, wchar_t*);
 
-void print_distance_in_table(char*, char*, int, int);
+void print_distance_in_table(wchar_t*, wchar_t*, int, int);
 
-void print_distance_of_combinations(char**, int);
+void print_distance_of_combinations(wchar_t**, int);
 
-void print_distance_of_combinations_part(char**, int, int);
+void print_distance_of_combinations_part(wchar_t**, int, int);
 
 #endif
