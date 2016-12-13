@@ -22,4 +22,4 @@ File is located nearby, unmarked
     [Template]       Check file reading capabilities
     [Setup]          Backup current input file
     [Teardown]       Restore current input file
-    Jurek, Marek, Janek
+    Jurek, Marek, Janek, Петр
