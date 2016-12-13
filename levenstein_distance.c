@@ -85,14 +85,18 @@ void print_distance_of_combinations(wchar_t** words, int length)
 void print_distance_of_combinations_part(wchar_t** words, int length, int index)
 {
     if (!(index < length && index >= 0))
+    {
+        printf("incorrect index\n");
+        printf("should be 0 <= %i < %i\n", index, length);
         return;
+    }
     int max_length = 0;
     for(int i = 0; i < length - 1; ++i)
     {
         int t = wcslen(words[i]);
         max_length = (max_length < t) ? t : max_length;
     }
-    printf("Odległość Levenstein'a od %ls do:\n", words[index]);
+    printf("Odległość Levenstein'a od %ls jest:\n", words[index]);
     for(int i = 0; i < length; ++i)
     {
         if (index == i)

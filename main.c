@@ -17,7 +17,6 @@
 static char* bin_filename;
 const char* default_input_filename = "./lwords.txt";
 const char* default_program_locale = "";
-const int verbosity = 1;
 
 void usage();
 char* get_filename(char*[], int);
@@ -33,11 +32,18 @@ int main(int argc, char* argv[])
     // setting global bin_filename variable
     bin_filename = argv[0];
     char* arg_filename = get_string_argument(argv, argc, "--filename", default_input_filename);
+
+    // setting index of word
     int index = get_index(argv, argc);
+    if (index != -1)
+    {
+        sscanf(argv[index], "%i", &index);
+    }
     struct stat buf;
     // basic functionality
     if (argc == 3 &&
         index_of_string_in_strings(argv, argc, "--filename") == -1 &&
+        index_of_string_in_strings(argv, argc, "--locale") == -1 &&
         index_of_string_in_strings(argv, argc, "--index") == -1)
     {
         wchar_t* a1 = calloc(120, sizeof(wchar_t));
