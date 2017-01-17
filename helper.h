@@ -10,5 +10,6 @@ void debug_c(char c);
 void debug_wc(wchar_t wc);
 int index_of_string_in_strings(char* strings[], int strings_length, char* string);
 void print_string_array(wchar_t** res, int a);
+int between(const int a, const int x, const int y);
 
 #endif

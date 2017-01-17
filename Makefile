@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-c -Wall --std=c11
+CFLAGS=-c -Wall --std=c11 -Iconfig/
 LDFLAGS=
-SOURCES=main.c levenstein_distance.c helper.c file_input.c
+SOURCES=main.c levenstein_distance.c helper.c file_input.c config/config.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=main.out
 PYTHON_EXECUTABLE=python3.5

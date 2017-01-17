@@ -8,11 +8,10 @@
 #include "helper.h"
 #include "levenstein_distance.h"
 #include "file_input.h"
+#include "config.h"
 
 #ifndef _MAIN_C_
 #define _MAIN_C_
-
-#define between(A,X,Y) ((A) < (Y) && (A) >= (X))
 
 static char* bin_filename;
 const char* default_input_filename = "./lwords.txt";
@@ -105,8 +104,8 @@ char* get_string_argument(char* argv[], int argc, char* ident_name, const char* 
     debug(ident_name);
     debug_i(filename_idx);
     char* input_filename = between(filename_idx, 0, argc) ?
-                           argv[filename_idx] :
-                           default_value;
+                           (char*)argv[filename_idx] :
+                           (char*)default_value;
     return input_filename;
 }
 

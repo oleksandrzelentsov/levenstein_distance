@@ -73,4 +73,9 @@ void print_string_array(wchar_t** res, int a)
     }
 }
 
+int between(const int a, const int x, const int y)
+{
+    return a < y && a >= x;
+}
+
 #endif
