@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-c -Wall --std=c11 -Iini/src/
+CFLAGS=-c -Wall --std=c11
 LDFLAGS=
-SOURCES=main.c levenstein_distance.c helper.c file_input.c ini/src/ini.c
+SOURCES=main.c levenstein_distance.c helper.c file_input.c cfg.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=main.out
 PYTHON_EXECUTABLE=python3.5
