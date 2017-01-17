@@ -41,12 +41,12 @@ void kvp_delete(key_value_pair* kvp1)
     free(kvp1);
 }
 
-// Section functions
-
-cfg_section* cfg_s_create(wchar_t* name, key_value_pair** contents)
-{
-    
-}
+// // Section functions
+// 
+// cfg_section* cfg_s_create(wchar_t* name, key_value_pair** contents)
+// {
+//     
+// }
 // 
 // cfg_section* cfg_s_from_file(const wchar_t* filename)
 // {

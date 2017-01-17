@@ -8,7 +8,7 @@
 #include "helper.h"
 #include "levenstein_distance.h"
 #include "file_input.h"
-#include "ini.h"
+#include "cfg.h"
 
 #ifndef _MAIN_C_
 #define _MAIN_C_
