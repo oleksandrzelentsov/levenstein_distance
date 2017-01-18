@@ -22,3 +22,5 @@ clean:
 
 test:
 	"$(PYTHON_EXECUTABLE)" -mrobot --variable APP_EXECUTABLE_NAME:"$(realpath $(EXECUTABLE))" --pythonpath "$(TESTS_ROOT)/resources" -d "$(TEST_RESULTS)" "$(TESTS_ROOT)/testcases/*.robot"
+
+ft: $(EXECUTABLE) test

@@ -21,12 +21,12 @@ void kvp_delete(key_value_pair* kvp1);
 typedef struct CfgSection
 {
     wchar_t* name;
-    key_value_pair* contents;
-    unsigned int properties_count;
+    key_value_pair* pairs;
+    unsigned int pairs_count;
 } cfg_section;
 
-cfg_section* cfg_s_create(wchar_t* name, key_value_pair* contents);
-cfg_section** cfg_s_from_file(const wchar_t* filename);
+cfg_section* cfg_s_create(wchar_t* name, key_value_pair* pairs, int pairs_count);
+cfg_section** cfg_s_from_file(const char* filename, unsigned int* result_length);
 wchar_t* cfg_s_get_value_by_name(cfg_section* section, wchar_t* name);
 void cfg_s_delete(cfg_section* section);
 

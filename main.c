@@ -38,20 +38,23 @@ int main(int argc, char* argv[])
     {
         sscanf(argv[index], "%i", &index);
     }
-    struct stat buf;
     // basic functionality
     if (argc == 3 &&
         index_of_string_in_strings(argv, argc, "--filename") == -1 &&
         index_of_string_in_strings(argv, argc, "--locale") == -1 &&
         index_of_string_in_strings(argv, argc, "--index") == -1)
     {
-        wchar_t* a1 = calloc(120, sizeof(wchar_t));
-        wchar_t* a2 = calloc(120, sizeof(wchar_t));
+        //wchar_t* a1 = calloc(120, sizeof(wchar_t));
+        //wchar_t* a2 = calloc(120, sizeof(wchar_t));
+        wchar_t* a1;
+        wchar_t* a2;
+        cmemalloc(a1, wchar_t, 120);
+        cmemalloc(a2, wchar_t, 120);
         mbstowcs(a1, argv[1], 120);
         mbstowcs(a2, argv[2], 120);
         print_distance(a1, a2);
     }
-    else if (!stat(arg_filename, &buf))
+    else if (file_exists(arg_filename))
     {
         // todo implement new behavior
         int a = 0;

@@ -8,7 +8,7 @@
 #define _FILE_INPUT_C_
 const int max_line_length = 120;
 
-wchar_t** get_lines_from_file(char* filename, int* lines_count)
+wchar_t** get_lines_from_file(const char* filename, int* lines_count)
 {
     debug("allocating memory");
     FILE* fp = fopen(filename, "rb");
