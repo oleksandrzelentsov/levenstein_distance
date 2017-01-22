@@ -135,40 +135,38 @@ cfg_section** cfg_s_from_file(const char* filename, unsigned int* result_length)
 {
     cfg_section** result;
     cfg_section* current_section = cfg_s_create_empty(CFG_DEFAULT_SECTION_NAME);
-    key_value_pair* current_kvp;
     wchar_t** lines;
     int lines_count;
 
     cmemalloc(result, cfg_section*, 1);
-    memalloc(current_kvp, key_value_pair);
     lines = get_lines_from_file(filename, &lines_count);
     for(int i = 0; i < lines_count; ++i)
     {
         char line_type = wtf_is_the_line(lines[i]);
         switch(line_type)
         {
-        case 's':
-            // end current section
             cfg_section** n_result;
-            cmemalloc(n_result, cfg_section*, *result_length + 1);
-            for(int i = 0; i < *result_length; ++i)
-            {
-                n_result[i] = result[i];
-            }
-            result[(*result_length)++] = current_section;
-            // start new section
-            current_section = cfg_s_from_line(lines[i]);
-            break;
-        case 'o':
-            // write new kvp
-            cfg_s_add_opt(current_section, kvp_from_string(lines[i], L'='));
-            break;
-        case 'b':
-            break;
-        case 'c':
-            break;
-        default:
-            break;
+            case 's':
+                // end current section
+                cmemalloc(n_result, cfg_section*, *result_length + 1);
+                for(int i = 0; i < *result_length; ++i)
+                {
+                    n_result[i] = result[i];
+                }
+                result[(*result_length)++] = current_section;
+                // start new section
+                current_section = cfg_s_from_line(lines[i]);
+                break;
+            case 'o':
+                // write new kvp
+                cfg_s_add_opt(current_section, kvp_from_string(lines[i], L"="));
+                break;
+            case 'b':
+                break;
+            case 'c':
+                break;
+            default:
+                break;
         }
     }
 
@@ -188,9 +186,9 @@ wchar_t* cfg_s_get_value_by_name(cfg_section* section, wchar_t* name)
 {
     for(int i = 0; i < section->pairs_count; ++i)
     {
-        if(wcscoll(section->pairs[i]->name, name) == 0)
+        if(wcscoll(section->pairs[i].key, name) == 0)
         {
-            return section->pairs[i]->value;
+            return section->pairs[i].value;
         }
     }
     return CFG_KEY_NONEXISTING;
@@ -200,7 +198,7 @@ void cfg_s_delete(cfg_section* section)
 {
     for(int i = 0; i < section->pairs_count; ++i)
     {
-        free(section->pairs[i]);
+        free(section->pairs + i);
     }
     free(section->pairs);
     free(section->name);
