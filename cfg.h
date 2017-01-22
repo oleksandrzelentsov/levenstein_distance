@@ -40,12 +40,12 @@ void cfg_s_delete(cfg_section* section);
 
 typedef struct CfgFile
 {
-    wchar_t* path;
+    char* path;
     cfg_section** sections;
     unsigned int sections_count;
 } cfg_file;
 
-cfg_file* cfg_f_read(wchar_t* filename);
+cfg_file* cfg_f_read(char* filename);
 void cfg_f_write(cfg_file* file);
 
 #endif

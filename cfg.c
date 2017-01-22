@@ -205,14 +205,25 @@ void cfg_s_delete(cfg_section* section)
     free(section);
 }
 
-// // File functions
-// 
-// cfg_file cfg_f_read(wchar_t* filename)
-// {
-// 
-// }
-// 
-// void cfg_f_write(cfg_file file)
+// File functions
+
+cfg_file* cfg_f_read(char* filename)
+{
+    if(!file_exists(filename))
+    {
+        return NULL;
+    }
+    cfg_file* result;
+    memalloc(result, cfg_file);
+    unsigned int sections_count;
+    memalloc(result, cfg_file);
+    result->path = filename;
+    result->sections = cfg_s_from_file(filename, &sections_count);
+    result->sections_count = sections_count;
+    return result;
+}
+
+// void cfg_f_write(cfg_file* file)
 // {
 // 
 // }
