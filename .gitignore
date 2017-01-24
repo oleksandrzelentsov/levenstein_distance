@@ -165,3 +165,4 @@ ENV/
 results/
 lwords.txt
 lwords.*.txt
+ld.cfg
