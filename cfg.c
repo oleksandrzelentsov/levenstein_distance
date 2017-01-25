@@ -26,13 +26,9 @@ key_value_pair* kvp_from_string(wchar_t* string)
 
     wchar_t* key;
     wchar_t* value;
-    //wchar_t* tvalue;
-
-    // wchar_t* format_str = L"%s=%s\n";
 
     cmemalloc(key, wchar_t, CFG_MAX_KEY_LENGTH);
     cmemalloc(value, wchar_t, CFG_MAX_VALUE_LENGTH);
-    //cmemalloc(tvalue, wchar_t, CFG_MAX_VALUE_LENGTH);
 
     swscanf(string, L"%[^=]=%s", key, value);
     debug_w(key);
@@ -153,7 +149,8 @@ cfg_section** cfg_s_from_file(const char* filename, unsigned int* result_length)
                 {
                     n_result[i] = result[i];
                 }
-                result[(*result_length)++] = current_section;
+                n_result[(*result_length)++] = current_section;
+                result = n_result;
                 // start new section
                 current_section = cfg_s_from_line(lines[i]);
                 break;
