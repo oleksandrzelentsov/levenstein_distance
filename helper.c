@@ -6,7 +6,6 @@
 
 #ifndef _HELPER_C_
 #define _HELPER_C_
-#define DEBUG 0
 
 int index_of_string_in_strings(char* strings[], int strings_length, char* string)
 {
@@ -54,7 +53,7 @@ void debug_wc(wchar_t wc)
 {
     if(DEBUG)
     {
-        printf("DEBUG %lc\n", wc);
+        printf("DEBUG %c\n", (char)wc);
     }
 }
 
@@ -62,7 +61,7 @@ void debug_w(wchar_t* message)
 {
     if(DEBUG)
     {
-        printf("DEBUG %ls\n", message);
+        printf("DEBUG %s\n", (char*)message);
     }
 }
 

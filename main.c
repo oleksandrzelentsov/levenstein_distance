@@ -38,6 +38,7 @@ int main(int argc, char* argv[])
     if (file_exists(config_filename))
     {
         f = cfg_f_read(config_filename);
+        cfg_f_debug(f);
     }
 
     // setting index of word

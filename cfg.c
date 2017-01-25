@@ -20,23 +20,23 @@ key_value_pair* kvp_create(wchar_t* key, wchar_t* value)
     return result;
 }
 
-key_value_pair* kvp_from_string(wchar_t* string, const wchar_t* separator)
+key_value_pair* kvp_from_string(wchar_t* string)
 {
     key_value_pair* result;
 
     wchar_t* key;
     wchar_t* value;
+    //wchar_t* tvalue;
 
-    unsigned int max_format_length = 4 + wcslen(separator);
-    wchar_t* format_str = L"%%s%s%%s";
-    wchar_t* format_substituted;
+    // wchar_t* format_str = L"%s=%s\n";
 
     cmemalloc(key, wchar_t, CFG_MAX_KEY_LENGTH);
     cmemalloc(value, wchar_t, CFG_MAX_VALUE_LENGTH);
-    cmemalloc(format_substituted, wchar_t, max_format_length);
+    //cmemalloc(tvalue, wchar_t, CFG_MAX_VALUE_LENGTH);
 
-    swprintf(format_substituted, max_format_length, format_str, separator);
-    swscanf(string, format_substituted, key, value);
+    swscanf(string, L"%[^=]=%s", key, value);
+    debug_w(key);
+    debug_w(value);
     result = kvp_create(key, value);
     return result;
 }
@@ -159,7 +159,7 @@ cfg_section** cfg_s_from_file(const char* filename, unsigned int* result_length)
                 break;
             case 'o':
                 // write new kvp
-                cfg_s_add_opt(current_section, kvp_from_string(lines[i], L"="));
+                cfg_s_add_opt(current_section, kvp_from_string(lines[i]));
                 break;
             case 'b':
                 break;
@@ -223,9 +223,41 @@ cfg_file* cfg_f_read(char* filename)
     return result;
 }
 
-// void cfg_f_write(cfg_file* file)
-// {
-// 
-// }
+cfg_section* cfg_f_get_default_section(cfg_file* file)
+{
+    for(int i = 0; i < file->sections_count; ++i)
+    {
+        if (wcscmp(file->sections[i]->name, CFG_DEFAULT_SECTION_NAME) == 0)
+        {
+            return file->sections[i];
+        }
+    }
+    return NULL;
+}
+
+void cfg_f_debug(cfg_file* file)
+{
+    cfg_section* default_s = cfg_f_get_default_section(file);
+    if (default_s != NULL)
+    {
+        for (int j = 0; j < default_s->pairs_count; ++j)
+        {
+            printf("%s=%s\n", (char*)default_s->pairs[j].key, (char*)default_s->pairs[j].value);
+        }
+        printf("\n");
+    }
+    for (int i = 0; i < file->sections_count; ++i)
+    {
+        cfg_section* t = file->sections[i];
+        if (t == default_s) continue;
+        printf("[%s]\n", (char*)t->name);
+        for (int j = 0; j < t->pairs_count; ++j)
+        {
+            printf("%s=%s\n", (char*)t->pairs[j].key, (char*)t->pairs[j].value);
+        }
+        if (i != file->sections_count - 1)
+            printf("\n");
+    }
+}
 
 #endif

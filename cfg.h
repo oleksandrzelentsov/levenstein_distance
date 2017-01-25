@@ -5,7 +5,7 @@
 #define CFG_MAX_KEY_LENGTH 16
 #define CFG_MAX_VALUE_LENGTH 5
 #define CFG_DEFAULT_SECTION_NAME L"default"
-#define CFG_SECTION_FORMAT L"[%s]"
+#define CFG_SECTION_FORMAT L"[%[^]]\n"
 #define CFG_KEY_NONEXISTING L"absent"
 
 typedef union kvp
@@ -19,7 +19,7 @@ typedef union kvp
 } key_value_pair;
 
 key_value_pair* kvp_create(wchar_t* key, wchar_t* value);
-key_value_pair* kvp_from_string(wchar_t* string, const wchar_t* separator);
+key_value_pair* kvp_from_string(wchar_t* string);
 void kvp_delete(key_value_pair* kvp1);
 
 typedef struct CfgSection
@@ -46,6 +46,7 @@ typedef struct CfgFile
 } cfg_file;
 
 cfg_file* cfg_f_read(char* filename);
-void cfg_f_write(cfg_file* file);
+cfg_section* cfg_f_get_default_section(cfg_file* file);
+void cfg_f_debug(cfg_file* file);
 
 #endif

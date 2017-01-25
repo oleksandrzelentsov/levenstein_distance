@@ -2,6 +2,7 @@
 #ifndef _HELPER_H_
 #define _HELPER_H_
 
+#define DEBUG 0
 #define memalloc(A,B) A=(B*)malloc(sizeof(B))
 #define cmemalloc(A,B,C) A=(B*)calloc(C,sizeof(B))
 
