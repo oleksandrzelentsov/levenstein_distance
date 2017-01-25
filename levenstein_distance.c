@@ -105,4 +105,12 @@ void print_distance_of_combinations_part(wchar_t** words, int length, int index)
     }
 }
 
+l_word* l_w_create(wchar_t* word, wchar_t* lang)
+{
+    l_word* result;
+    memalloc(result, l_word);
+    result->word = word;
+    result->lang = lang;
+}
+
 #endif
