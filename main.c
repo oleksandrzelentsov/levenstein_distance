@@ -48,9 +48,10 @@ int main(int argc, char* argv[])
         sscanf(argv[index], "%i", &index);
     }
     // basic functionality
-    if (argc == 3 &&
+    if (/*argc == 3 &&*/
         index_of_string_in_strings(argv, argc, "--filename") == -1 &&
-        index_of_string_in_strings(argv, argc, "--locale") == -1 &&
+        // index_of_string_in_strings(argv, argc, "--locale") == -1 &&
+        // index_of_string_in_strings(argv, argc, "--config-file") == -1 &&
         index_of_string_in_strings(argv, argc, "--index") == -1)
     {
         wchar_t* a1;
