@@ -1,9 +1,11 @@
-#include "file_input.h"
-#include "helper.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
+
+#include "file_input.h"
+#include "helper.h"
+
 #ifndef _FILE_INPUT_C_
 #define _FILE_INPUT_C_
 const int max_line_length = 120;

@@ -14,8 +14,8 @@ typedef union WLang
     {
         wchar_t* lang;
         wchar_t* word;
-    }
-    wchar_t* pair[2];
+    };
+    wchar_t* as_array[2];
 } l_word;
 
 l_word* l_w_create(wchar_t* word, wchar_t* lang);

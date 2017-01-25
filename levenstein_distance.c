@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <wctype.h>
 #include <wchar.h>
+
 #include "helper.h"
 #include "levenstein_distance.h"
 
@@ -111,6 +112,7 @@ l_word* l_w_create(wchar_t* word, wchar_t* lang)
     memalloc(result, l_word);
     result->word = word;
     result->lang = lang;
+    return result;
 }
 
 #endif
