@@ -33,12 +33,18 @@ int main(int argc, char* argv[])
     bin_filename = argv[0];
     char* arg_filename = get_string_argument(argv, argc, "--filename", default_input_filename);
     char* config_filename = get_string_argument(argv, argc, "--config-file", default_config_filename);
+    int config_debug = index_of_string_in_strings(argv, argc, "--config-debug") != -1;
+    DEBUG = index_of_string_in_strings(argv, argc, "--debug") != -1;
     cfg_file* f = NULL;
 
     if (file_exists(config_filename))
     {
         f = cfg_f_read(config_filename);
-        cfg_f_debug(f);
+        if (config_debug)
+        {
+            cfg_f_debug(f);
+            return 0;
+        }
     }
 
     // setting index of word
@@ -48,10 +54,12 @@ int main(int argc, char* argv[])
         sscanf(argv[index], "%i", &index);
     }
     // basic functionality
-    if (/*argc == 3 &&*/
+    if (between(argc, 3,
+                1 +     // program name
+                2 +     // 2 words to compare
+                2 * 3 + // positional args with values
+                1) &&   // bigger by 1
         index_of_string_in_strings(argv, argc, "--filename") == -1 &&
-        // index_of_string_in_strings(argv, argc, "--locale") == -1 &&
-        // index_of_string_in_strings(argv, argc, "--config-file") == -1 &&
         index_of_string_in_strings(argv, argc, "--index") == -1)
     {
         wchar_t* a1;
@@ -62,7 +70,7 @@ int main(int argc, char* argv[])
         mbstowcs(a2, argv[2], 120);
         print_distance(a1, a2);
     }
-    else if (file_exists(arg_filename))
+    else if (file_exists(arg_filename) && argc != 2)
     {
         // todo implement new behavior
         int a = 0;
@@ -71,7 +79,6 @@ int main(int argc, char* argv[])
         wchar_t** res = get_lines_from_file(arg_filename, &a);
         debug("returned from function, count:");
         debug_i(a);
-        //print_string_array(res, a);
         if (index != -1)
         {
             debug("printing distance of combinations using index");

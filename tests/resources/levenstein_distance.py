@@ -4,6 +4,7 @@ from robot.api.deco import keyword
 from re import findall
 from itertools import combinations
 from os.path import isfile
+from os import remove, rename
 
 
 _get_robot_var = BuiltIn().get_variable_value
@@ -53,11 +54,13 @@ def setup_mine():
     _log_to_console('| TESTING |')
     filename = _get_robot_var('${DEFAULT_INPUT_FILENAME}')
     if isfile(filename):
-        call(['mv', filename, filename + '.bak'])
+        rename(filename, filename + '.bak')
 
 
 @keyword('restore current input file')
 def teardown_mine():
     filename = _get_robot_var('${DEFAULT_INPUT_FILENAME}')
     if isfile(filename + '.bak'):
-        call(['mv', filename + '.bak', filename])
+        rename(filename + '.bak', filename)
+    elif isfile(filename):
+        remove(filename)
