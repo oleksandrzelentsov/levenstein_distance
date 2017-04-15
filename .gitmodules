@@ -1,4 +1,0 @@
-[submodule "ini"]
-	path = ini
-	url = https://github.com/rxi/ini.git
-    ignore = dirty
