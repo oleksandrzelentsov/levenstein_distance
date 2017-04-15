@@ -163,5 +163,6 @@ ENV/
 
 # Own
 results/
+bin/*
 lwords.txt
 lwords.*.txt
