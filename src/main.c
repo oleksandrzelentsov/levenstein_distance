@@ -39,6 +39,12 @@ int main(int argc, char* argv[])
         sscanf(argv[index], "%i", &index);
     }
     struct stat buf;
+    if (index_of_string_in_strings(argv, argc, "-h") != -1 ||
+        index_of_string_in_strings(argv, argc, "--help") != -1)
+    {
+        usage();
+        return 0;
+    }
     // basic functionality
     if (argc == 3 &&
         index_of_string_in_strings(argv, argc, "--filename") == -1 &&
@@ -87,7 +93,17 @@ int main(int argc, char* argv[])
 
 void usage()
 {
-    printf("użycie: %s <słowo1> <słowo2>\n", bin_filename);
+    printf("użycie:\n");
+    printf("%s <-h|--help>\n", bin_filename);
+    printf("%s <słowo1> <słowo2>\n", bin_filename);
+    printf("%s [--filename FILENAME] [--index N]\n", bin_filename);
+    printf("\n");
+    printf("-h\n--help\n    ten komunikat\n\n");
+    printf("<słowo1>\n<słowo2>\n    porównanie dwóch słów\n\n");
+    printf("--filename FILENAME\n    porównanie wszystkich słów z pliku FILENAME (domyślnie %s)\n\n", default_input_filename);
+    printf("--index N\n    domyślnie w porównaniu występują wszystkie kombinacje słów\n");
+    printf("    jeśli napisać argument N to w porównaniu pojawią się tylko\n");
+    printf("    kombinacje ze słowem w pliku FILENAME\n\n");
 }
 
 int get_index(char* argv[], int argc)
