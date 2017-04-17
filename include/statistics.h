@@ -7,7 +7,7 @@ typedef struct pair_info
 {
     union
     {
-        wchar_t** words;
+        wchar_t* words[2];
         struct
         {
             wchar_t* word1;
