@@ -1,3 +1,4 @@
+#include <wchar.h>
 #ifndef _LEVENSTEIN_DISTANCE_H_
 #define _LEVENSTEIN_DISTANCE_H_
 

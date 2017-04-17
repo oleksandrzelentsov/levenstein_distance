@@ -24,14 +24,15 @@ $(EXECUTABLE): $(OBJECTS)
 .c.o:
 	$(CC) $(CFLAGS) $< -o $@
 
-clean: $(OBJECTS)
-	rm $(OBJECTS)
+clean:
+	rm --force $(OBJECTS)
 
-install: $(EXECUTABLE)
+install:
 	cp $(EXECUTABLE) $(INSTALL_PATH)
 
 uninstall: $(INSTALL_PATH)/$(EXECUTABLE_NAME)
-	rm $<
+	rm --force $<
 
-test: $(EXECUTABLE)
-	"$(PYTHON_EXECUTABLE)" -mrobot --variable APP_EXECUTABLE_NAME:"$(realpath $(EXECUTABLE))" --pythonpath "$(TESTS_ROOT)/resources" -d "$(TEST_RESULTS)" "$(TESTS_ROOT)/testcases/*.robot"
+test:
+	[ -f $(EXECUTABLE) ]
+	"$(PYTHON_EXECUTABLE)" -mrobot --variable APP_EXECUTABLE_NAME:"$(realpath $(EXECUTABLE))" --pythonpath "$(TESTS_ROOT)/resources" -d "$(TESTS_ROOT)/$(TEST_RESULTS)" "$(TESTS_ROOT)/testcases/*.robot"

@@ -10,6 +10,11 @@
 #ifndef _LEVENSTEIN_DISTANCE_C_
 #define _LEVENSTEIN_DISTANCE_C_
 
+int get_cost(wchar_t c1, wchar_t c2)
+{
+    return (c1 == c2) ? 0 : 1;
+}
+
 int distance(wchar_t *s, int len_s, wchar_t *t, int len_t)
 {
     int cost;
@@ -21,10 +26,7 @@ int distance(wchar_t *s, int len_s, wchar_t *t, int len_t)
     if (len_t == 0) return len_s;
 
     /* test if last characters of the strings match */
-    if (c1 == c2)
-        cost = 0;
-    else
-        cost = 1;
+    cost = get_cost(c1, c2);
 
     /* return minimum of
      * delete char from s,
