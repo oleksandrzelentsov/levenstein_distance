@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-c -Wall --std=c11 -Iinclude/
-LDFLAGS=
+LDFLAGS=-lm
 SOURCES=main.c levenstein_distance.c helper.c file_input.c cfg.c statistics.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE_DIR=bin

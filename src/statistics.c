@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 
 #include "statistics.h"
 #include "helper.h"
@@ -161,11 +162,6 @@ void print_words_with_max_distance(wchar_t** words, int len)
 
 void _print_avg_diff_pairs(PairInfo* pairs, int len)
 {
-    /* debug("!!!"); */
-    /* debug("_p_a_d_p: 1st pair:"); */
-    /* debug_w(pairs[0].w1); */
-    /* debug_w(pairs[0].w2); */
-    /* debug("!!!"); */
     float avg = 0;
     float pair_count = len;
     for(int i = 0; i < pair_count; ++i)
@@ -185,14 +181,46 @@ void _print_avg_diff_pairs(PairInfo* pairs, int len)
     printf("Średnia wartość różnic: %.2f\n", avg);
 }
 
+void _print_standard_deviation_pairs(PairInfo* pairs, int len)
+{
+    float avg = 0;
+    float pair_count = len;
+    for(int i = 0; i < pair_count; ++i)
+    {
+        debug("-------------------");
+        debug("pair:");
+        debug_w(pairs[i].w1);
+        debug_w(pairs[i].w2);
+        debug("current pair distance:");
+        debug_i(pairs[i].d);
+        float avg_component = pairs[i].d / pair_count;
+        debug("and it divided by pair count:");
+        debug_f(avg_component);
+        avg += avg_component;
+    }
+    debug("-------------------");
+    float sum_squares_diffs = 0;
+    for(int i = 0; i < pair_count; ++i)
+    {
+        debug("-------------------");
+        debug("pair:");
+        debug_w(pairs[i].w1);
+        debug_w(pairs[i].w2);
+        debug("current pair distance:");
+        debug_i(pairs[i].d);
+        float square_diff = pairs[i].d - avg;
+        square_diff *= square_diff;
+        debug("and its 'square difference'");
+        debug_f(square_diff);
+        sum_squares_diffs += square_diff;
+    }
+    float result = sqrt(sum_squares_diffs/(pair_count - 1));
+    printf("Odchylenie standardowe: %.2f\n", result);
+}
+
 void print_average_difference(wchar_t** words, int len)
 {
     PairInfo* pairs = get_possible_pairs(words, len);
-    /* debug("!!!"); */
-    /* debug("p_a_d: 1st pair:"); */
-    /* debug_w(pairs[0].w1); */
-    /* debug_w(pairs[0].w2); */
-    /* debug("!!!"); */
     int pair_count = get_possible_pair_count(len);
     _print_avg_diff_pairs(pairs, pair_count);
 }
@@ -213,6 +241,31 @@ void print_average_difference_one(wchar_t** words, int len, int index)
         }
     }
     _print_avg_diff_pairs(pairs, pair_count);
+}
+
+void print_standard_deviation(wchar_t** words, int len)
+{
+    PairInfo* pairs = get_possible_pairs(words, len);
+    int pair_count = get_possible_pair_count(len);
+    _print_standard_deviation_pairs(pairs, pair_count);
+}
+
+void print_standard_deviation_one(wchar_t** words, int len, int index)
+{
+    int pair_count = len - 1;
+    PairInfo* pairs = (PairInfo*)calloc(pair_count, sizeof(PairInfo));
+    for(int i = 0; i < len; ++i)
+    {
+        if(i < index)
+        {
+            pairs[i] = get_pair_info(words[index], words[i]);
+        }
+        else if (i > index)
+        {
+            pairs[i - 1] = get_pair_info(words[index], words[i]);
+        }
+    }
+    _print_standard_deviation_pairs(pairs, pair_count);
 }
 
 #endif

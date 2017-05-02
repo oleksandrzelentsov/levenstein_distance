@@ -35,5 +35,7 @@ void print_distance_distribution(wchar_t** words, int);
 void print_sorted_by_distance(wchar_t** words, int);
 void print_average_difference(wchar_t** words, int);
 void print_average_difference_one(wchar_t** words, int, int);
+void print_standard_deviation(wchar_t** words, int);
+void print_standard_deviation_one(wchar_t** words, int, int);
 
 #endif

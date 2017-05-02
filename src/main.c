@@ -55,6 +55,7 @@ int main(int argc, char* argv[])
         index_of_string_in_strings(argv, argc, "--filename") == -1 &&
         index_of_string_in_strings(argv, argc, "--average") == -1 &&
         index_of_string_in_strings(argv, argc, "--locale") == -1 &&
+        index_of_string_in_strings(argv, argc, "--std-dev") == -1 &&
         index_of_string_in_strings(argv, argc, "--index") == -1)
     {
         wchar_t* a1 = calloc(120, sizeof(wchar_t));
@@ -73,26 +74,34 @@ int main(int argc, char* argv[])
         debug_i(a);
         if (index != -1)
         {
+            debug("printing distance of combinations using index");
+            print_distance_of_combinations_part(res, a, index);
+            printf("\n");
             if(index_of_string_in_strings(argv, argc, "--average") >= 0)
             {
+                debug("printing average difference with index");
                 print_average_difference_one(res, a, index);
             }
-            else
+            else if (index_of_string_in_strings(argv, argc, "--std-dev") >= 0)
             {
-                debug("printing distance of combinations using index");
-                print_distance_of_combinations_part(res, a, index);
+                debug("printing standard deviation with index");
+                print_standard_deviation_one(res, a, index);
             }
         }
         else
         {
+            debug("printing distance of combinations");
+            print_distance_of_combinations(res, a);
+            printf("\n");
             if(index_of_string_in_strings(argv, argc, "--average") >= 0)
             {
+                debug("printing average difference");
                 print_average_difference(res, a);
             }
-            else
+            else if (index_of_string_in_strings(argv, argc, "--std-dev") >= 0)
             {
-                debug("printing distance of combinations");
-                print_distance_of_combinations(res, a);
+                debug("printing standard deviation");
+                print_standard_deviation(res, a);
             }
         }
     }
@@ -130,6 +139,8 @@ void usage()
     printf("    kombinacje ze słowem w pliku FILENAME\n\n");
     printf("--average\n"
            "    średnia wartość różnic\n\n");
+    printf("--std-dev\n"
+           "    odchylenie standardowe\n\n");
 }
 
 int get_index(char* argv[], int argc)
