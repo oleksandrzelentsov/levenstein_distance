@@ -1,11 +1,11 @@
-#include "helper.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "helper.h"
 
 #ifndef _HELPER_C_
 #define _HELPER_C_
-#define DEBUG 0
+extern int DEBUG;
 
 int index_of_string_in_strings(char* strings[], int strings_length, char* string)
 {
@@ -76,6 +76,14 @@ void print_string_array(wchar_t** res, int a)
 int between(const int a, const int x, const int y)
 {
     return a < y && a >= x;
+}
+
+void debug_f(float message)
+{
+    if(DEBUG)
+    {
+        printf("DEBUG %.2f\n", message);
+    }
 }
 
 #endif

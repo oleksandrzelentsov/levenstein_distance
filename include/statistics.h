@@ -33,5 +33,7 @@ void print_words_with_min_distance(wchar_t** words, int);
 void print_words_with_max_distance(wchar_t** words, int);
 void print_distance_distribution(wchar_t** words, int);
 void print_sorted_by_distance(wchar_t** words, int);
+void print_average_difference(wchar_t** words, int);
+void print_average_difference_one(wchar_t** words, int, int);
 
 #endif

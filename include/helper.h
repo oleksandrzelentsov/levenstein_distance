@@ -4,6 +4,7 @@
 
 void error(char* message);
 void debug(char* message);
+void debug_f(float message);
 void debug_w(wchar_t* message);
 void debug_i(int number);
 void debug_c(char c);

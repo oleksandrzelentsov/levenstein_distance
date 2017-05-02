@@ -1,5 +1,9 @@
+#include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+
 #include "statistics.h"
+#include "helper.h"
 
 #ifndef _STATISTICS_C_
 #define _STATISTICS_C_
@@ -33,13 +37,20 @@ int max_length(wchar_t** words, int len)
 PairInfo* get_possible_pairs(wchar_t** words, int len)
 {
     PairInfo* pairs = calloc(get_possible_pair_count(len), sizeof(PairInfo));
+    int k = 0;
     for(int i = 0; i < len; ++i)
     {
         for(int j = i + 1; j < len; ++j)
         {
+            k++;
+            debug("__________");
+            debug("create pair:");
+            debug_w(words[i]);
+            debug_w(words[j]);
             pairs[i] = get_pair_info(words[i], words[j]);
         }
     }
+    assert(k == get_possible_pair_count(len));
     return pairs;
 }
 
@@ -73,7 +84,7 @@ PairInfo* filter(PairInfo* pairs, int* rlen, int (*ffunc)(PairInfo))
             for(int j = 0; j < new_length; ++j)
                 temp[j] = new_pairs[j];
             temp[new_length++] = pairs[i];
-            free(new_pairs); // TODO dangerous place
+            /* free(new_pairs); // TODO dangerous place */
             new_pairs = temp;
         }
     }
@@ -87,7 +98,7 @@ void sort_pairs(PairInfo* pairs, int len, int (*cmpfunc)(PairInfo, PairInfo))
     {
         for(int i = 0; i < len - 1; ++i)
         {
-            if(cmpfunc(pairs[i], pairs[i + 1]) < 0)
+            if(cmpfunc(pairs[i], pairs[i + 1]) > 0)
             {
                 PairInfo c = pairs[i + 1];
                 pairs[i + 1] = pairs[i];
@@ -97,15 +108,24 @@ void sort_pairs(PairInfo* pairs, int len, int (*cmpfunc)(PairInfo, PairInfo))
     }
 }
 
-int pair_distance_cmp(PairInfo a, PairInfo b)
+void print_pairs(PairInfo* pairs, int len, int flen, int slen)
 {
-    return a.d - b.d;
+    char* format_string = calloc(100, sizeof(char));
+    sprintf(format_string, "| %%%ils | %%%ils | %%i\n", flen, slen);
+    for(int i = 0; i < len; ++i)
+        printf(format_string, pairs[i].w1, pairs[i].w2, pairs[i].d);
 }
 
 void print_words_with_min_distance(wchar_t** words, int len)
 {
+    int pair_distance_cmp(PairInfo a, PairInfo b)
+    {
+        return a.d - b.d;
+    }
+
     /* shortest distance word pairs */
     PairInfo* pairs = get_possible_pairs(words, len);
+
     sort_pairs(pairs, len, pair_distance_cmp);
     int is_correct_length(PairInfo a)
     {
@@ -115,23 +135,75 @@ void print_words_with_min_distance(wchar_t** words, int len)
     /* define column length for both columns */
     int* col_lengths = get_column_length(min_dist_pairs, len);
     /* print in table */
+    print_pairs(min_dist_pairs, len, col_lengths[0], col_lengths[1]);
 }
 
 void print_words_with_max_distance(wchar_t** words, int len)
 {
+    int pair_distance_cmp(PairInfo a, PairInfo b)
+    {
+        return a.d - b.d;
+    }
+
     /* longest distance word pairs */
+    PairInfo* pairs = get_possible_pairs(words, len);
+    sort_pairs(pairs, len, pair_distance_cmp);
+    int is_correct_length(PairInfo a)
+    {
+        return a.d == pairs[len - 1].d;
+    }
+    int new_len = len;
+    PairInfo* max_dist_pairs = filter(pairs, &new_len, is_correct_length);
     /* define column length for both columns */
+    int* col_lengths = get_column_length(max_dist_pairs, new_len);
     /* print in table */
+    print_pairs(max_dist_pairs, new_len, col_lengths[0], col_lengths[1]);
 }
 
-void print_distance_distribution(wchar_t** words, int len)
+void _print_avg_diff_pairs(PairInfo* pairs, int len)
 {
-
+    float avg = 0;
+    float pair_count = len;
+    for(int i = 0; i < pair_count; ++i)
+    {
+        debug("-------------------");
+        debug("pair:");
+        debug_w(pairs[i].w1);
+        debug_w(pairs[i].w2);
+        debug("current pair distance:");
+        debug_i(pairs[i].d);
+        float avg_component = pairs[i].d / pair_count;
+        debug("and it divided by pair count:");
+        debug_f(avg_component);
+        avg += avg_component;
+    }
+    debug("-------------------");
+    printf("Średnia wartość różnic: %.2f\n", avg);
 }
 
-void print_sorted_by_distance(wchar_t** words, int len)
+void print_average_difference(wchar_t** words, int len)
 {
+    PairInfo* pairs = get_possible_pairs(words, len);
+    int pair_count = get_possible_pair_count(len);
+    _print_avg_diff_pairs(pairs, pair_count);
+}
 
+void print_average_difference_one(wchar_t** words, int len, int index)
+{
+    int pair_count = len - 1;
+    PairInfo* pairs = (PairInfo*)calloc(pair_count, sizeof(PairInfo));
+    for(int i = 0; i < len; ++i)
+    {
+        if(i < index)
+        {
+            pairs[i] = get_pair_info(words[index], words[i]);
+        }
+        else if (i > index)
+        {
+            pairs[i - 1] = get_pair_info(words[index], words[i]);
+        }
+    }
+    _print_avg_diff_pairs(pairs, pair_count);
 }
 
 #endif
