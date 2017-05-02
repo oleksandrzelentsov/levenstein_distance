@@ -36,18 +36,17 @@ int max_length(wchar_t** words, int len)
 
 PairInfo* get_possible_pairs(wchar_t** words, int len)
 {
-    PairInfo* pairs = calloc(get_possible_pair_count(len), sizeof(PairInfo));
+    PairInfo* pairs = (PairInfo*)calloc(get_possible_pair_count(len), sizeof(PairInfo));
     int k = 0;
     for(int i = 0; i < len; ++i)
     {
         for(int j = i + 1; j < len; ++j)
         {
-            k++;
             debug("__________");
             debug("create pair:");
             debug_w(words[i]);
             debug_w(words[j]);
-            pairs[i] = get_pair_info(words[i], words[j]);
+            pairs[k++] = get_pair_info(words[i], words[j]);
         }
     }
     assert(k == get_possible_pair_count(len));
@@ -162,6 +161,11 @@ void print_words_with_max_distance(wchar_t** words, int len)
 
 void _print_avg_diff_pairs(PairInfo* pairs, int len)
 {
+    /* debug("!!!"); */
+    /* debug("_p_a_d_p: 1st pair:"); */
+    /* debug_w(pairs[0].w1); */
+    /* debug_w(pairs[0].w2); */
+    /* debug("!!!"); */
     float avg = 0;
     float pair_count = len;
     for(int i = 0; i < pair_count; ++i)
@@ -184,6 +188,11 @@ void _print_avg_diff_pairs(PairInfo* pairs, int len)
 void print_average_difference(wchar_t** words, int len)
 {
     PairInfo* pairs = get_possible_pairs(words, len);
+    /* debug("!!!"); */
+    /* debug("p_a_d: 1st pair:"); */
+    /* debug_w(pairs[0].w1); */
+    /* debug_w(pairs[0].w2); */
+    /* debug("!!!"); */
     int pair_count = get_possible_pair_count(len);
     _print_avg_diff_pairs(pairs, pair_count);
 }
