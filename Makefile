@@ -19,7 +19,7 @@ all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	mkdir -p $(EXECUTABLE_DIR)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
 
 .c.o:
 	$(CC) $(CFLAGS) $< -o $@
