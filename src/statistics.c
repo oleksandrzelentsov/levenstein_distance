@@ -185,6 +185,12 @@ void _print_standard_deviation_pairs(PairInfo* pairs, int len)
 {
     float avg = 0;
     float pair_count = len;
+    if(pair_count == 1)
+    {
+        debug("only one pair for comparison");
+        printf("tylko jedna para dla porównania\n");
+        return;
+    }
     for(int i = 0; i < pair_count; ++i)
     {
         debug("-------------------");
