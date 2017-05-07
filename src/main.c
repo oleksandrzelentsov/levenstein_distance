@@ -9,6 +9,7 @@
 #include "levenstein_distance.h"
 #include "file_input.h"
 #include "cfg.h"
+#include "statistics.h"
 
 #ifndef _MAIN_C_
 #define _MAIN_C_
@@ -16,6 +17,8 @@
 static char* bin_filename;
 const char* default_input_filename = "./lwords.txt";
 const char* default_program_locale = "";
+const int debug_on = 0;
+int DEBUG = 1;
 
 void usage();
 char* get_filename(char*[], int);
@@ -25,12 +28,15 @@ char* get_string_argument(char*[], int, char*, const char*);
 
 int main(int argc, char* argv[])
 {
+    DEBUG = index_of_string_in_strings(argv, argc, "-v") >= 0 || debug_on;
     // enabling Polish characters
     setlocale(LC_ALL, get_string_argument(argv, argc, "--locale", default_program_locale));
 
     // setting global bin_filename variable
     bin_filename = argv[0];
     char* arg_filename = get_string_argument(argv, argc, "--filename", default_input_filename);
+    int arg_help = index_of_string_in_strings(argv, argc, "-h") +
+                   index_of_string_in_strings(argv, argc, "--help") >= 0;
 
     // setting index of word
     int index = get_index(argv, argc);
@@ -39,10 +45,17 @@ int main(int argc, char* argv[])
         sscanf(argv[index], "%i", &index);
     }
     struct stat buf;
+    if (arg_help)
+    {
+        usage();
+        return 0;
+    }
     // basic functionality
     if (argc == 3 &&
         index_of_string_in_strings(argv, argc, "--filename") == -1 &&
+        index_of_string_in_strings(argv, argc, "--average") == -1 &&
         index_of_string_in_strings(argv, argc, "--locale") == -1 &&
+        index_of_string_in_strings(argv, argc, "--std-dev") == -1 &&
         index_of_string_in_strings(argv, argc, "--index") == -1)
     {
         wchar_t* a1 = calloc(120, sizeof(wchar_t));
@@ -53,23 +66,43 @@ int main(int argc, char* argv[])
     }
     else if (!stat(arg_filename, &buf))
     {
-        // todo implement new behavior
         int a = 0;
         debug("reading from file");
         debug(arg_filename);
         wchar_t** res = get_lines_from_file(arg_filename, &a);
         debug("returned from function, count:");
         debug_i(a);
-        //print_string_array(res, a);
         if (index != -1)
         {
             debug("printing distance of combinations using index");
             print_distance_of_combinations_part(res, a, index);
+            printf("\n");
+            if(index_of_string_in_strings(argv, argc, "--average") >= 0)
+            {
+                debug("printing average difference with index");
+                print_average_difference_one(res, a, index);
+            }
+            if (index_of_string_in_strings(argv, argc, "--std-dev") >= 0)
+            {
+                debug("printing standard deviation with index");
+                print_standard_deviation_one(res, a, index);
+            }
         }
         else
         {
             debug("printing distance of combinations");
             print_distance_of_combinations(res, a);
+            printf("\n");
+            if(index_of_string_in_strings(argv, argc, "--average") >= 0)
+            {
+                debug("printing average difference");
+                print_average_difference(res, a);
+            }
+            if (index_of_string_in_strings(argv, argc, "--std-dev") >= 0)
+            {
+                debug("printing standard deviation");
+                print_standard_deviation(res, a);
+            }
         }
     }
     /* if we don't have enough arguments,
@@ -87,7 +120,27 @@ int main(int argc, char* argv[])
 
 void usage()
 {
-    printf("użycie: %s <słowo1> <słowo2>\n", bin_filename);
+    printf("użycie:\n");
+    printf("%s <-h|--help>\n", bin_filename);
+    printf("%s <słowo1> <słowo2>\n", bin_filename);
+    printf("%s [--filename FILENAME] [--index N]\n", bin_filename);
+    printf("\n");
+    printf("-h\n"
+           "--help\n"
+           "ten komunikat\n");
+    printf("\n");
+    printf("<słowo1>\n"
+           "<słowo2>\n"
+           "porównanie dwóch słów\n\n");
+    printf("--filename FILENAME\n"
+           "porównanie wszystkich słów z pliku FILENAME (domyślnie %s)\n\n", default_input_filename);
+    printf("--index N\n    domyślnie w porównaniu występują wszystkie kombinacje słów\n");
+    printf("    jeśli napisać argument N to w porównaniu pojawią się tylko\n");
+    printf("    kombinacje ze słowem w pliku FILENAME\n\n");
+    printf("--average\n"
+           "    średnia wartość różnic\n\n");
+    printf("--std-dev\n"
+           "    odchylenie standardowe\n\n");
 }
 
 int get_index(char* argv[], int argc)

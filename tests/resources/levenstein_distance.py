@@ -61,3 +61,5 @@ def teardown_mine():
     filename = _get_robot_var('${DEFAULT_INPUT_FILENAME}')
     if isfile(filename + '.bak'):
         call(['mv', filename + '.bak', filename])
+    elif isfile(filename):
+        call(['rm', filename])
