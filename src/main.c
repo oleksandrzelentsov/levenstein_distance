@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
                 debug("printing average difference with index");
                 print_average_difference_one(res, a, index);
             }
-            else if (index_of_string_in_strings(argv, argc, "--std-dev") >= 0)
+            if (index_of_string_in_strings(argv, argc, "--std-dev") >= 0)
             {
                 debug("printing standard deviation with index");
                 print_standard_deviation_one(res, a, index);
@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
                 debug("printing average difference");
                 print_average_difference(res, a);
             }
-            else if (index_of_string_in_strings(argv, argc, "--std-dev") >= 0)
+            if (index_of_string_in_strings(argv, argc, "--std-dev") >= 0)
             {
                 debug("printing standard deviation");
                 print_standard_deviation(res, a);
