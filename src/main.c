@@ -153,6 +153,8 @@ void usage()
            "    średnia wartość różnic\n\n");
     printf("--std-dev\n"
            "    odchylenie standardowe\n\n");
+    printf("--config-file\n"
+           "    plik konfiguracyjny dla wyjątków\n\n");
 }
 
 int get_index(char* argv[], int argc)

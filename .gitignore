@@ -166,3 +166,4 @@ results/
 bin/*
 lwords.txt
 lwords.*.txt
+ld.cfg

@@ -242,7 +242,7 @@ void cfg_f_debug(cfg_file* file)
     {
         for (int j = 0; j < default_s->pairs_count; ++j)
         {
-            printf("%s=%s\n", (char*)default_s->pairs[j].key, (char*)default_s->pairs[j].value);
+            printf("%ls=%ls\n", default_s->pairs[j].key, default_s->pairs[j].value);
         }
         printf("\n");
     }
@@ -251,9 +251,9 @@ void cfg_f_debug(cfg_file* file)
         cfg_section* t = file->sections[i];
         if (t == default_s) continue;
         printf("[%s]\n", (char*)t->name);
-        for (int j = 0; j < t->pairs_count; ++j)
+        for (int j = 0; j < default_s->pairs_count; ++j)
         {
-            printf("%s=%s\n", (char*)t->pairs[j].key, (char*)t->pairs[j].value);
+            printf("%ls=%ls\n", default_s->pairs[j].key, default_s->pairs[j].value);
         }
         if (i != file->sections_count - 1)
             printf("\n");
