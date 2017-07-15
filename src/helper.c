@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
 #include "helper.h"
 
 #ifndef _HELPER_C_
@@ -84,6 +86,11 @@ void debug_f(float message)
     {
         printf("DEBUG %.2f\n", message);
     }
+}
+
+int file_exists(const char* filename)
+{
+    return access( filename, F_OK ) != -1;
 }
 
 #endif

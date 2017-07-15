@@ -17,6 +17,7 @@
 static char* bin_filename;
 const char* default_input_filename = "./lwords.txt";
 const char* default_program_locale = "";
+const char* default_config_filename = "./ld.cfg";
 const int debug_on = 0;
 int DEBUG = 1;
 
@@ -35,9 +36,20 @@ int main(int argc, char* argv[])
     // setting global bin_filename variable
     bin_filename = argv[0];
     char* arg_filename = get_string_argument(argv, argc, "--filename", default_input_filename);
+    char* config_filename = get_string_argument(argv, argc, "--config-file", default_config_filename);
+    cfg_file* f = NULL;
+
     int arg_help = index_of_string_in_strings(argv, argc, "-h") +
                    index_of_string_in_strings(argv, argc, "--help") >= 0;
-
+    if (file_exists(config_filename))
+    {
+        f = cfg_f_read(config_filename);
+        if (DEBUG)
+        {
+            cfg_f_debug(f);
+            return 0;
+        }
+    }
     // setting index of word
     int index = get_index(argv, argc);
     if (index != -1)

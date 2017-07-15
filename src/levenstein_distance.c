@@ -15,7 +15,7 @@ int get_cost(wchar_t c1, wchar_t c2)
     return (c1 == c2) ? 0 : 1;
 }
 
-int distance(wchar_t *s, int len_s, wchar_t *t, int len_t)
+int _distance(wchar_t *s, int len_s, wchar_t *t, int len_t)
 {
     int cost;
     wchar_t c1 = towlower(s[len_s - 1]);
@@ -37,6 +37,13 @@ int distance(wchar_t *s, int len_s, wchar_t *t, int len_t)
                    distance(s, len_s    , t, len_t - 1) + 1,
                    distance(s, len_s - 1, t, len_t - 1) + cost);
 }
+
+int distance(wchar_t *s, int len_s, wchar_t *t, int len_t)
+{
+    return _distance(s, len_s, t, len_t);
+}
+
+int distance_exclusions(wchar_t *s, int len_s, wchar_t *t, int len_t);
 
 int minimum(int a, int b, int c)
 {
