@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
         if (DEBUG)
         {
             cfg_f_debug(f);
-            return 0;
+            /* return 0; */
         }
     }
     // setting index of word

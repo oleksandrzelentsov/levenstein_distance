@@ -43,7 +43,15 @@ int distance(wchar_t *s, int len_s, wchar_t *t, int len_t)
     return _distance(s, len_s, t, len_t);
 }
 
-int distance_exclusions(wchar_t *s, int len_s, wchar_t *t, int len_t);
+int distance_exclusions(wchar_t *s, int len_s, wchar_t *t, int len_t, cfg_file* exclusions)
+{
+    for (int i = 0; i < exclusions->sections_count; ++i)
+    {
+        // handle one section
+        // TODO create func for all substitutions from cfg file for pair of languages
+        // calculate differences we need to add and subtract from resulting distance for it to be right.
+    }
+}
 
 int minimum(int a, int b, int c)
 {
